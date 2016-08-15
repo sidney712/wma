@@ -1,0 +1,311 @@
+/*-------- Water Meter Application --------*/
+
+/*---- Natural Materials Theme ----*/
+
+
+.theme-natural-materials {
+
+// Edit the theme here
+
+	// Fonts
+	@fontFamily1: 'Segoe UI', 'Segoe CF', sans-serif;
+	// Content text color
+	@textColor1: #ddd;
+	// Text color of buttons and headings
+	@textColor2: #fff;
+	// Front background
+	@bgColor1: #232323;
+	@bgImage1: '../img/dark_leather_lighter.png';
+	// Rear background
+	@bgColor2: #866f51;
+	@bgImage2: '../img/retina_wood_darker.png';
+	// Mixins
+	.front-background () {
+		background-color: @bgColor1;
+		background-image: url(@bgImage1);
+	}
+	.scrollbar () {
+		&::-webkit-scrollbar {
+			background-color: @bgColor1 + #101010;
+		}
+	}
+
+// This things just copy
+
+	color: @textColor1;
+	h1, h2, h3, .btn {
+		color: @textColor2;
+	}
+	#wrapper {
+		background-color: @bgColor2;
+		background: url(../img/loading.gif) 50% 55% no-repeat, url(@bgImage2);
+	}
+	.navigator, .bottomline {
+		.front-background;
+	}
+	.main {
+		.indicator {
+			div {
+				color: @textColor2;
+			}
+		}
+		.meter {
+			.front-background;
+			> div {
+				> div {
+					background-color: @bgColor2;
+					background-image: url(@bgImage2);
+				}
+			}
+			.switcher {
+				label {
+					color: @textColor2;
+				}
+			}
+		}
+		.metering {
+			> div {
+				&:first-child {
+					> div {
+						&:last-child {
+							.front-background;
+							.thumbnails {
+								background-color: @bgColor2;
+							}
+						}
+					}
+				}
+			}
+			.mode {
+				.front-background;
+				&:after {
+					.front-background;
+				}
+				.table {
+					color: @textColor1;
+					input[type="text"] {
+						background-color: @bgColor1 + #101010;
+						color: @textColor1;
+					}
+					div {
+						div {
+							background-color: @bgColor1 + #101010;
+							border: 1px solid @bgColor2;
+						}
+					}
+				}
+			}
+		}
+		.data-entry {
+			.scrollbar;
+			.protocol {
+				.front-background;
+				input[type="text"] {
+					background-color: @bgColor1 + #101010;
+					color: @textColor1;
+					&:focus {
+						background-color: @bgColor1;
+					}
+				}
+			}
+		}
+	}
+	.doclist {
+		.container {
+			.front-background;
+			div {
+				div {
+					background-color: @bgColor2;
+					background-image: url(@bgImage2);
+				}
+			}
+			> div {
+				.scrollbar;
+			}
+		}
+	}
+	.settings {
+		input[type="text"], select {
+			background-color:  @bgColor1 + #101010;
+			color: @textColor1;
+		}
+		input[type="text"] {
+			&:focus {
+					background-color: @bgColor1;
+				}
+		}
+		.container {
+			.front-background;
+			div {
+				div {
+					background-color: @bgColor2;
+					background-image: url(@bgImage2);
+					span {
+						color: @textColor2;
+					}
+				}
+			}
+			> div {
+				.scrollbar;
+			}
+		}
+	}
+}
+
+
+
+
+
+/*---- White Denim Theme ----*/
+
+
+.theme-white-denim {
+
+// Edit the theme here
+
+	// Content text color
+	@textColor1: #111;
+	// Text color of buttons and headings
+	@textColor2: #333;
+	// Front background
+	@bgColor1: #ddd;
+	@bgImage1: '../img/gray_jean_darker.png';
+	// Rear background
+	@bgColor2: #949494;
+	@bgImage2: '../img/mochaGrunge.png';
+	// Mixins
+	.front-background () {
+		background-color: @bgColor1;
+		background-image: url(@bgImage1);
+	}
+	.scrollbar () {
+		&::-webkit-scrollbar {
+			background-color: @bgColor1 + #101010;
+		}
+	}
+	// Icons color correction
+	input[type="radio"] + label span, .thumbnails div img {
+		opacity: .75;
+	}
+
+// This things just copy
+
+	color: @textColor1;
+	h1, h2, h3, .btn {
+		color: @textColor2;
+	}
+	#wrapper {
+		background-color: @bgColor2;
+		background: url(../img/loading.gif) 50% 55% no-repeat, url(@bgImage2);
+	}
+	.navigator, .bottomline {
+		.front-background;
+	}
+	.main {
+		.indicator {
+			div {
+				color: @textColor2;
+			}
+		}
+		.meter {
+			.front-background;
+			> div {
+				> div {
+					background-color: @bgColor2;
+					background-image: url(@bgImage2);
+				}
+			}
+			.switcher {
+				label {
+					color: @textColor2;
+				}
+			}
+		}
+		.metering {
+			> div {
+				&:first-child {
+					> div {
+						&:last-child {
+							.front-background;
+							.thumbnails {
+								background-color: @bgColor2;
+							}
+						}
+					}
+				}
+			}
+			.mode {
+				.front-background;
+				&:after {
+					.front-background;
+				}
+				.table {
+					color: @textColor1;
+					input[type="text"] {
+						background-color: @bgColor1 + #101010;
+						color: @textColor1;
+					}
+					div {
+						div {
+							background-color: @bgColor1 + #101010;
+							border: 1px solid @bgColor2;
+						}
+					}
+				}
+			}
+		}
+		.data-entry {
+			.scrollbar;
+			.protocol {
+				.front-background;
+				input[type="text"] {
+					background-color: @bgColor1 + #101010;
+					color: @textColor1;
+					&:focus {
+						background-color: @bgColor1;
+					}
+				}
+			}
+		}
+	}
+	.doclist {
+		.container {
+			.front-background;
+			div {
+				div {
+					background-color: @bgColor2;
+					background-image: url(@bgImage2);
+				}
+			}
+			> div {
+				.scrollbar;
+			}
+		}
+	}
+	.settings {
+		input[type="text"], select {
+			background-color:  @bgColor1 + #101010;
+			color: @textColor1;
+		}
+		input[type="text"] {
+			&:focus {
+					background-color: @bgColor1;
+				}
+		}
+		.container {
+			.front-background;
+			div {
+				div {
+					background-color: @bgColor2;
+					background-image: url(@bgImage2);
+					span {
+						color: @textColor2;
+					}
+				}
+			}
+			> div {
+				.scrollbar;
+			}
+		}
+	}
+}

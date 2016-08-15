@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+	<meta charset="utf-8" />
+	<title>WMA</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="icon" href="img/wma-icon-transparent.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="css/reset.css" />
+	<link rel="stylesheet" href="css/styles.css" media="screen" />
+	<link rel="stylesheet" href="css/font-awesome.css" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+	<script src="js/main.js"></script>
+</head>
+<body>
+	<div id="wrapper">
+
+
+
+		<!-- Top bar -->
+
+		<div class="navigator">
+				<div>
+					<img id="logo" src="img/wma-logo-64.png" height="64" width="180" alt="Логотип" />
+				</div>
+				<a href="index.html">
+					<i class="fa fa-home btn"></i><!-- id="btnHome" -->
+				</a>
+				<a href="doclist.html">
+					<i class="fa fa-archive btn"></i><!-- id="btnArchive" -->
+				</a>
+				<a href="settings.html">
+					<i class="fa fa-cogs btn"></i><!-- id="btnSettings" -->
+				</a>
+		</div><!-- end .top -->
+
+
+
+		<!-- Settings Block -->
+
+		<div class="settings">
+
+
+			<!-- Settings Container -->
+
+			<div class="container">
+				<h3>Налаштування</h3>
+				<div>
+					<div>
+						<span>Камера</span>
+						<label for="cameraSelect">
+							Вибір відеопристрою:
+						</label>
+						<select id="cameraSelect">
+							<option disabled>-- Вибрати пристрій --</option>
+						</select>
+					</div>
+					<div>
+						<span>Теми оформлення</span>
+						<label for="themeSelect">
+							Вибір теми:
+						</label>
+						<select id="themeSelect" onchange="window.location.href=this.options[this.selectedIndex].value">
+							<option value="settings.html" selected>Dark Сarbon</option>
+							<option value="settings-nm.html">Natural Materials</option>
+							<option value="settings-wd.html">White Denim</option>
+						</select>
+					</div>
+					<div>
+						<span>Лічильник імпульсів</span>
+						<label for="pulseQuantity">
+							Кількість імпульсів за літр:
+						</label>
+						<input type="text" id="pulseQuantity" />
+						<br />
+						<label for="portNumber">
+							Номер USB-порту:
+						</label>
+						<input type="text" id="portNumber" />
+						<br />
+						<label for="deviceChannel">
+							Канал пристрою:
+						</label>
+						<input type="text" id="deviceChannel" />
+						<br />
+						<label for="accuracy">
+							Точність:
+						</label>
+						<input type="text" id="accuracy" />
+					</div>
+					<div>
+						<span>Випробування Q<sub>min</sub></span>
+						<label for="qminFlow">
+							Номінальна витрата, л/с
+						</label>
+						<input type="text" id="qminFlow" />
+						<br />
+						<label for="qminFault">
+							Допустиме відхилення, %
+						</label>
+						<input type="text" id="qminFault" />
+						<br />
+						<label for="qminDistance">
+							Об'єм проливу, л
+						</label>
+						<input type="text" id="qminDistance" />
+					</div>
+					<div>
+						<span>Випробування Q<sub>t</sub></span>
+						<label for="qtFlow">
+							Номінальна витрата, л/с
+						</label>
+						<input type="text" id="qtFlow" />
+						<br />
+						<label for="qtFault">
+							Допустиме відхилення, %
+						</label>
+						<input type="text" id="qtFault" />
+						<br />
+						<label for="qtDistance">
+							Об'єм проливу, л
+						</label>
+						<input type="text" id="qtDistance" />
+					</div>
+					<div>
+						<span>Випробування Q<sub>nom</sub></span>
+						<label for="qnomFlow">
+							Номінальна витрата, л/с
+						</label>
+						<input type="text" id="qnomFlow" />
+						<br />
+						<label for="qnomFault">
+							Допустиме відхилення, %
+						</label>
+						<input type="text" id="qnomFault" />
+						<br />
+						<label for="qnomDistance">
+							Об'єм проливу, л
+						</label>
+						<input type="text" id="qnomDistance" />
+					</div>
+				</div>
+			</div><!-- end .container -->
+
+
+			<!-- Settings Bottom Line -->
+
+			<div class="bottomline">
+				<i class="btn">Зберегти</i><!-- id="btnSave" -->
+				<i class="btn">Відмінити</i><!-- id="btnCancel" -->
+			</div><!-- end .bottomline -->
+
+
+		</div><!-- end .settings -->
+
+
+
+	</div><!-- end #wrapper -->
+</body>
+</html>
