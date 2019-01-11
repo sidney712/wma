@@ -1,0 +1,946 @@
+/*
+-------- Water Meter Application --------
+*/
+
+@font-face {
+  font-family: 'Segoe CF';
+  src: url('../fonts/segoeuicf.ttf');
+}
+
+/*---- Common styles ----*/
+html {
+  height: 100vh;
+}
+body {
+  background: url(../img/tap-water-logo.png) 50% 45% no-repeat, #212121;
+  color: #bbbbbb;
+  cursor: default;
+  font: 2.66666667vmin/1.2em 'Segoe UI', 'Segoe CF', sans-serif; /* 1em = 2vmax; 1vmin = 1vmax * 800px / 600px */
+  height: 100vh; /*min-height: 600px;*/
+}
+a {
+  text-decoration: none;
+}
+h1, h2 {
+  color: #ffffff;
+  display: block;
+  padding: 1.333333333333333vh 0 .3333333333333333vh 1.5vw; /* 8px 2px 12px */
+}
+h3 {
+  color: #ffffff;
+  display: inline-block;
+}
+i, input[type='button'] {
+  display: inline-block;
+  position: relative;
+  -webkit-transition: text-shadow 0.2s;
+  transition: text-shadow 0.2s;
+}
+i:active, input[type='button']:active {
+  top: .1666666666666667vh;
+}
+i:hover, input[type='button']:hover {
+  cursor: pointer;
+  text-shadow: 0 0 4px #e1eff5;
+}
+input {
+  outline: none;
+}
+input[type='radio'] {
+  display: none;
+}
+input[type='radio'] + label span {
+  background: url(../img/check_radio_sheet.png) -38px top no-repeat;
+  cursor: pointer;
+  border-radius: 50%;
+  display: inline-block;
+  height: 19px; /* 19px rigid */
+  -webkit-transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s;
+  vertical-align: middle;
+  width: 19px; /* 19px rigid */
+}
+input[type='radio']:checked + label span {
+  background: url(../img/check_radio_sheet.png) -57px top no-repeat;
+}
+input[type='radio'] + label {
+  cursor: pointer;
+}
+input[type='radio'] + label:hover span {
+  box-shadow: 0 0 8px -1px #3bb3e0;
+}
+span {
+  display: block;
+}
+sub {
+  vertical-align: sub;
+}
+sup {
+  font-size: .7em;
+  vertical-align: super;
+}
+#wrapper {
+  height: 100vh; /* 600px */
+  background-color: #4a4a4a;
+  background: url(../img/loading.gif) 50% 55% no-repeat, url('../img/wild_oliva.jpg');
+  margin: 0 auto; /*min-width: 800px;*/
+  overflow: hidden;
+  position: relative;
+  width: 100vw; /* 800px */
+}
+.concealed {
+  visibility: hidden;
+}
+.hidden {
+  display: none;
+}
+.btn {
+  background-color: #3bb3e0;
+  background-image: -webkit-linear-gradient(to top, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: linear-gradient(to top, #2ca0ca 0%, #3eb8e5 100%);
+  border: solid 1px #186f8f;
+  -webkit-box-shadow: inset 0px 1px 0px #7fd2f1, 0px 1px 0px #4a4a4a;
+  box-shadow: inset 0px 1px 0px #7fd2f1, 0px 1px 0px #4a4a4a;
+  border-radius: 2px;
+  color: #ffffff;
+  text-align: center;
+}
+.btn:active {
+  background-image: -webkit-linear-gradient(to top, #3eb8e5 0%, #2ca0ca 100%);
+  background-image: linear-gradient(to top, #3eb8e5 0%, #2ca0ca 100%);
+}
+
+/*---- Top Bar ----*/
+.top-bar {
+  background-color: #232323;
+  background-image: url('../img/micro_carbon.png');
+  height: 4vh; /* 24px */
+  margin: .6666666666666667vh 0 1.333333333333333vh; /* 4px 8px */
+  text-align: right;
+  width: 100vw;
+}
+.top-bar:after {
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+}
+.top-bar div {
+  float: left;
+  margin: -0.5vh 2vw 0; /* -3px 16px */
+  height: 4.333333333333333vh; /* 26px */
+  width: 9.125vw; /* 73px */
+}
+.top-bar div img {
+  cursor: pointer;
+  height: 100%;
+  width: auto;
+}
+.top-bar .btn {
+  height: 2.666666666666667vh; /* 16px */
+  margin: .25vh 1vw 0 0;
+  padding: .25vh 0 .125vh;
+  width: 4vw;
+}
+
+/*---- Main Block ----*/
+.main {
+  height: 95.33333333333333vh; /* 572px */
+  width: 100vw;
+}
+.main div {
+  border-radius: 4px;
+}
+  /*-- Mode Marker --*/
+.main .mode-marker {
+  height: 4.666666666666667vh; /* 28px */
+  left: 14vw; /* 112px */
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 25.75vw; /* 206px */
+}
+.main .mode-marker div {
+  background-color: #3bb3e0;
+  background-image: -webkit-linear-gradient(to top, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: linear-gradient(to top, #2ca0ca 0%, #3eb8e5 100%);
+  border-radius: 0;
+  color: #ffffff;
+  display: inline-block;
+  height: 4.666666666666667vh; /* 28px */
+  position: relative;
+  top: -4vh; /* -24px */
+  -webkit-transition: top .2s;
+  transition: top .2s;
+  width: 7vw; /* 56px */
+}
+.main .mode-marker div:after {
+  background-color: #2ca0ca;
+  background-image: -webkit-linear-gradient(to bottom, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: linear-gradient(to bottom, #2ca0ca 0%, #3eb8e5 100%);
+  border-radius: 0 0 50% 50%;
+  content: '';
+  display: block;
+  height: .6666666666666667vh; /* 4px */
+  position: absolute;
+  top: 4.333333333333333vh; /* 26px */
+  width: 7vw; /* 56px */
+}
+.main .mode-marker div.active,
+.main .mode-marker div:active {
+  top: 0;
+}
+  /*-- Counter --*/
+.main .counter {
+  background-color: #232323;
+  background-image: url('../img/micro_carbon.png');
+  float: left;
+  height: 40.66666666666667vh; /* 244px */
+  margin: 0 0 1.75vw 1.333333333333333vh; /* 14px 8px */
+  width: 38.75vw; /* 310px */
+}
+.main .counter h1,
+.main .counter h2 {
+  height: 3.166666666666667vh; /* 19px */
+  padding: 1.333333333333333vh 0 .3333333333333333vh 1.5vw; /* 8px 2px 12px */
+}
+.main .counter > div:first-child {
+  height: 30.83333333333333vh; /* 185px */
+  margin-bottom: .6666666666666667vh; /* 4px */
+  width: 38.75vw; /* 310px */
+}
+.main .counter > div > div {
+  background-color: #4a4a4a;
+  background-image: url('../img/wild_oliva.jpg');
+  border-radius: 2px;
+  float: left;
+  height: 23.66666666666667vh; /* 142px */
+  margin: .6666666666666667vh 0 .6666666666666667vh .5vw; /* 4px */
+  text-align: center;
+  width: 12.25vw; /* 98px */
+}
+.main .counter > div > div div {
+  height: 9.666666666666667vh; /* 58px */
+}
+.main .counter > div > div div span {
+  height: 3.166666666666667vh; /* 19px */
+  margin: .6666666666666667vh 0; /* 4px */
+}
+.main .counter > div div + span {
+  font-size: 1.4em;
+  margin-top: 4.166666666666667vh; /* 25px */
+}
+.main .counter .mode-switcher {
+  height: 9.166666666666667vh; /* 55px */
+  text-align: center;
+  width: 38.75vw; /* 310px */
+}
+.main .counter .mode-switcher label {
+  background-color: #3bb3e0;
+  background-image: -webkit-linear-gradient(to top, #2ca0ca 0%, #3eb8e5 100%);
+  background-image: linear-gradient(to top, #2ca0ca 0%, #3eb8e5 100%);
+  border-left: 1px solid #2ab7ec;
+  border-radius: 0 5px 5px 0;
+  -webkit-box-shadow: inset 0px 1px 0px #2ab7ec, 0px 4px 0px 0px #156785, 0px 6px 5px #0f5671;
+  box-shadow: inset 0px 1px 0px #2ab7ec, 0px 4px 0px 0px #156785, 0px 6px 5px #0f5671;
+  color: #ffffff;
+  display: inline-block;
+  height: 4.666666666666667vh; /* 28px */
+  margin: 0 1vw; /* 8px */
+  padding-top: .6666666666666667vh; /* 4px */
+  position: relative;
+  top: 0;
+  -webkit-transition: box-shadow 0.1s, top 0.1s;
+  transition: box-shadow 0.1s, top 0.1s;
+  width: 7.5vw; /* 60px */
+}
+.main .counter .mode-switcher label:before {
+  background-color: #0d7ba2;
+  border-right: solid 1px #07526e;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  -webkit-box-shadow: inset 0px 1px 0px #2ab7ec, 0px 4px 0px 0px #032b3a, 0px 6px 5px #0f5671;
+  box-shadow: inset 0px 1px 0px #2ab7ec, 0px 4px 0px 0px #032b3a, 0px 6px 5px #0f5671;
+  content: '';
+  display: block;
+  height: 5.333333333333333vh;
+  left: -0.75vw; /* -6px */
+  position: absolute;
+  top: 0;
+  -webkit-transition: background-color 0.3s, box-shadow 0.1s, top 0.1s;
+  transition: background-color 0.3s, box-shadow 0.1s, top 0.1s;
+  width: 0.75vw; /* 6px */
+}
+.main .counter .mode-switcher input[type='radio']:checked + label {
+  background-image: -webkit-linear-gradient(to top, #80ddff 0%, #31bef1 100%);
+  background-image: linear-gradient(to top, #80ddff 0%, #31bef1 100%);
+  -webkit-box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #156785, 0px 4px 3px #0f5671;
+  box-shadow: inset 0px 1px 0px #2ab7ec, 0px 2px 0px 0px #3bb3e0, 0px 4px 3px #0f5671;
+  top: 3px; /* rigid */
+}
+.main .counter .mode-switcher input[type='radio']:checked + label:before {
+  background-color: #fff;
+  -webkit-box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #032b3a, 1px 1px 0px 0px #044a64, 2px 2px 0px 0px #3eb8e5, 2px 5px 0px 0px #044a64, 5px 4px 2px #0b698b, -1px 5px 6px #3eb8e5;
+  box-shadow: inset 0px 1px 0px #2ab7ec, 0px 5px 0px 0px #032b3a, 1px 1px 0px 0px #044a64, 2px 2px 0px 0px #3eb8e5, 2px 5px 0px 0px #044a64, 5px 4px 2px #1e88af, -1px 5px 6px #3eb8e5;
+  top: -3px; /* rigid */
+}
+
+/*-- Metering --*/
+.main .metering {
+  height: 62.5vh; /* 375px */
+  width: 100vw;  
+}
+  /*-- Metering Reading --*/
+.main .metering .metering-reading {
+  height: 40.66666666666667vh; /* 244px */
+  margin: 0 1vw; /* 8px */
+}
+.main .metering .metering-reading:after {
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+}
+.main .metering .metering-reading > div {
+  background-color: #232323;
+  background-image: url('../img/micro_carbon.png');
+  float: right;
+  height: 41.33333333333333vh; /* 248px */
+  margin-top: -0.66666667vh; /* -4px */
+  position: relative;
+  width: 58.75vw; /* 470px */
+}
+.main .metering .metering-reading > div .camera-switcher {
+  background-color: #4a4a4a;
+  float: left;
+  height: 40vh; /* 240px */
+  margin: .6666666666666667vh .5vw; /* 4px 4px */
+  -webkit-tap-highlight-color: transparent;
+  text-align: center;
+  width: 12.25vw; /* 98px */
+}
+.main .metering .metering-reading > div .camera-switcher input[type='radio'] + label span {
+  margin: -5vh 0.25vw 0 0; /* -30px */
+}
+.main .metering .metering-reading > div .camera-switcher label + span {
+  font-size: 0.625em;
+  line-height: 2vh;
+  margin: -2px 0 0 26px; /* rigid */
+}
+.main .metering .metering-reading > div .camera-switcher div {
+  margin: 1.333333333333333vh 0 0 -1vw; /* 8px -8px */
+}
+.main .metering .metering-reading > div .camera-switcher div:first-child {
+  height: 12.33333333333333vh; /* 74px */
+}
+.main .metering .metering-reading > div .camera-switcher div:first-child label + span {
+  margin-top: 1vh;
+}
+.main .metering .metering-reading > div .camera-switcher div:first-child img {
+  height: auto;
+  margin-bottom: -1.33333333vh; /* -8px */
+}
+.main .metering .metering-reading > div .camera-switcher div img {
+  height: auto;
+  width: 9.333333333333333vh; /* 56px */
+}
+.main .metering .metering-reading > div .camera {
+  height: 40vh; /* 240px */
+  overflow: hidden;
+  position: absolute;
+  right: .5vw; /* 4px */
+  text-align: center;
+  top: .6666666666666667vh; /* 4px */
+  -webkit-transition: background-color 0.4s ease-in-out, height 0.2s ease-in-out;
+  transition: background-color 0.4s ease-in-out, height 0.2s ease-in-out;
+  width: 45vw; /* 360px */
+}
+.main .metering .metering-reading > div .camera div {
+  height: 100%;
+  width: 100%;
+}
+.main .metering .metering-reading > div .camera div video,
+.main .metering .metering-reading > div .camera div canvas {
+  border-radius: 2px;
+  height: 100%;
+  width: auto;
+}
+.main .metering .metering-reading > div .camera.zoom,
+.main .metering .metering-reading > div .camera:active {
+  background-color: rgba(0, 0, 0, 0.8);
+  border-radius: 0;
+  height: 100%;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+}
+  /*-- Metering Writing --*/
+.main .metering .metering-writing {
+  background-color: #232323;
+  background-image: url('../img/micro_carbon.png');
+  height: 19.5vh; /* 117px */
+  margin: .5vh auto 0; /* 3px */
+  position: relative;
+  width: 98.75vw; /* 790px */
+}
+.main .metering .metering-writing h3 {
+  margin: 0 3.7% 1vh; /* dbg | 6px */
+}
+.main .metering .metering-writing:after {
+  background-color: #232323;
+  background-image: url('../img/micro_carbon.png');
+  border-radius: 0 0 50% 50%;
+  content: '';
+  display: block;
+  height: 1.833333333333333vh; /* 11px */
+  position: absolute;
+  bottom: -1.66666667vh; /* -10px */
+  width: 98.75vw; /* 790px */
+}
+.main .metering .metering-writing .table {
+  color: #bbbbbb;
+  font: 1em/0.85em 'Segoe UI', 'Segoe CF', sans-serif;
+  height: 14vh; /* 84px */
+  margin: 0 auto;
+  text-align: center;
+  width: 97.125vw; /* 777px */
+  /* table column */
+}
+.main .metering .metering-writing .table:after {
+  content: '';
+  display: block;
+  clear: both;
+  height: 0;
+}
+.main .metering .metering-writing .table i {
+  height: 13.66666666666667vh; /* 82px */
+  line-height: 5.125em;
+  margin: -0.16666667vh 0 0 1vw; /* -1px 8px */
+  width: 7.5vw; /* 60px */
+}
+.main .metering .metering-writing .table input[type='text'] {
+  background-color: #333333;
+  border: none;
+  color: #bbbbbb;
+  display: inline-block;
+  font: 1em/0.85em 'Segoe UI', 'Segoe CF', sans-serif;
+  height: 6.333333333333333vh; /* 38px */
+  text-align: center;
+  -webkit-transition: box-shadow 0.2s;
+  transition: box-shadow 0.2s;
+  width: 14.75vw; /* 118px */
+}
+.main .metering .metering-writing .table input[type='text']:focus {
+  box-shadow: 0 0 8px -2px #3bb3e0 inset;
+}
+.main .metering .metering-writing .table span {
+  display: inline;
+  line-height: 2.5em;
+}
+.main .metering .metering-writing .table div {
+  border-radius: 0;
+  /* table cell */
+}
+.main .metering .metering-writing .table div div {
+  background-color: #333333;
+  border: 1px solid #4a4a4a;
+  height: 47.61904761904762%; /* 40px */
+  width: 100%; /* 97px */
+}
+.main .metering .metering-writing .table div div:first-child {
+  font-size: .9em;
+}
+.main .metering .metering-writing .table div div:first-child span {
+  line-height: 1em;
+}
+.main .metering .metering-writing .table > div {
+  float: left;
+  height: 14vh; /* 84px */
+  width: 12.125vw; /* 97px */
+}
+.main .metering .metering-writing .table > div:nth-child(2),
+.main .metering .metering-writing .table > div:nth-child(3) {
+  width: 15vw; /* 120px */
+}
+.main .metering .metering-writing .table > div:nth-child(7) {
+  width: 9.5vw; /* 76px */
+}
+.main .metering .metering-writing .table > div:nth-child(8) {
+  width: 9vw; /* 72px */
+}
+
+/*-- Water Meter Specifications --*/
+.main .water-meter-specs {
+  height: 24vh; /* 144px */
+  margin: .3333333333333333vh auto 0; /* 2px */
+  overflow-y: scroll;
+  position: static;
+  width: 98.625vw;
+}
+.main .water-meter-specs::-webkit-scrollbar {
+  background-color: #333333;
+  border-radius: 2px;
+  width: 1.5vw; /* 12px */
+}
+.main .water-meter-specs::-webkit-scrollbar-thumb {
+  background-color: #3eb8e5;
+  border-radius: 2px;
+}
+  /*-- Protocol --*/
+.main .water-meter-specs .protocol {
+  background-color: #232323;
+  background-image: url('../img/micro_carbon.png');
+  height: 24.16666666666667vh; /* 145px */
+  text-align: center;
+  width: 95.875vw; /* 790px */
+}
+.main .water-meter-specs .protocol h3 {
+  margin: .6666666666666667vh 0; /* 4px */
+}
+.main .water-meter-specs .protocol input[type='text'] {
+  background-color: #333333;
+  border: 1px solid #929da0;
+  border-left-width: 8px;
+  border-radius: 2px;
+  color: #bbbbbb;
+  font: 1em/1.2em 'Segoe UI', 'Segoe CF', sans-serif;
+  margin-bottom: 1vh; /* 6px */
+  padding-left: .5vw; /* 4px */
+  -webkit-transition: box-shadow 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  width: 21.25vw; /* 175px */
+}
+.main .water-meter-specs .protocol input[type='text']:focus {
+  background-color: #232323;
+  box-shadow: 0 0 8px -2px #3bb3e0 inset;
+}
+.main .water-meter-specs .protocol label {
+  display: block;
+  font-size: .9em;
+  margin-left: 1vw; /* 8px */
+  margin-bottom: .6666666666666667vh; /* 4px */
+}
+.main .water-meter-specs .protocol > div > div {
+  display: inline-block;
+  font-size: .9em;
+  margin-left: 1vw; /* 8px */
+  position: relative;
+  text-align: left;
+  width: 30.375vw; /* 243px */
+}
+.main .water-meter-specs .protocol .btn {
+  height: 2.5vh;
+  padding: .3333333333333333vh 0 .1666666666666667vh; /* 3px 2px */
+  top: -0.16666667vh; /* -1px */
+  width: 3vw;
+}
+.main .water-meter-specs .protocol .btn:active {
+  top: 0;
+}
+  /*-- Client Data --*/
+.main .water-meter-specs .client-data {
+  height: auto;
+  margin-top: .3333333333333333vh; /* 2px */
+}
+.main .water-meter-specs .client-data div div {
+  margin-bottom: 1.333333333333333vh; /* 8px */
+}
+
+/*---- Bottom Bar ----*/
+.main .bottom-bar {
+  border-radius: 0;
+}
+
+
+/*---- Document List Block ----*/
+.doclist {
+  height: 95.33333333333333vh; /* 572px */
+  width: 100vw;
+}
+.doclist h3 {
+  display: inline-block;
+  margin: .6666666666666667vh 0 1vh 8vw; /* 4px 6px 64px */
+}
+.doclist input[type='date'] {
+  border: 2px solid #3bb3e0;
+  border-radius: 2px;
+  font: 0.8em 'Segoe UI', 'Segoe CF', sans-serif;
+  margin: .3333333333333333vh 1vw 1.333333333333333vh 3vw; /* 2px 8px  8px 24px */
+  width: 25vw; /* 200px */
+}
+.doclist span {
+  display: inline;
+  font-size: .9em;
+  margin-left: 1vw; /* 8px */
+}
+.doclist .container {
+  background-color: #232323;
+  background-image: url('../img/micro_carbon.png');
+  border-radius: 4px;
+  height: 86.83333333333333vh; /* 521px */
+  margin: 0 auto;
+  width: 98vw; /* 784px */
+}
+.doclist .container div div {
+  background-color: #4a4a4a;
+  background-image: url('../img/wild_oliva.jpg');
+  margin: 0 auto .6666666666666667vh; /* 4px */
+  padding: .3333333333333333vh 1vw; /* 2px 8px */
+  width: 92.375vw; /* 739px */
+}
+.doclist .container > div {
+  height: 74.16666666666667vh; /* 445px */
+  margin-right: 1vw; /* 8px */
+  overflow-y: scroll;
+  width: 96.875vw; /* 775px */
+}
+.doclist .container > div::-webkit-scrollbar {
+  background-color: #333333;
+  border-radius: 2px;
+  width: 1.5vw; /* 12px */
+}
+.doclist .container > div::-webkit-scrollbar-thumb {
+  background-color: #3eb8e5;
+  border-radius: 2px;
+}
+.doclist .container > .btn {
+  height: 2.666666666666667vh;
+  padding: .25vh 0;
+  width: 4vw;
+}
+.doclist .container div div .btn {
+  height: 2.5vh;
+  margin-right: .25vw;
+  padding: .25vh 0;
+  width: 3vw;
+}
+.doclist .container .empty {
+  background: none;
+}
+.doclist .container .empty span {
+  display: inline-block;
+  margin: 2.666666666666667vh 2vw; /* 16px */
+}
+
+
+/*---- Settings Block ----*/
+.settings {
+  height: 95.33333333333333vh; /* 572px */
+  width: 100vw;
+}
+.settings h3 {
+  display: inline-block;
+  margin: .6666666666666667vh 0 1vh 8vw; /* 4px 6px 64px */
+}
+.settings input[type='text'],
+.settings select {
+  background-color: #333333;
+  border: 1px solid #929da0;
+  border-radius: 2px;
+  color: #bbbbbb;
+  display: inline-block;
+  font: 0.8em 'Segoe UI', 'Segoe CF', sans-serif;
+  margin-bottom: 1vh; /* 6px */
+  padding-left: .5vw; /* 4px */
+  -webkit-transition: box-shadow 0.2s;
+  transition: background-color 0.2s, box-shadow 0.2s;
+  width: 30.75vw; /* 246px */
+}
+.settings input[type='text'] {
+  width: 30vw; /* 240px */
+}
+.settings input[type='text']:focus {
+  background-color: #232323;
+  box-shadow: 0 0 8px -2px #3bb3e0 inset;
+}
+.settings .container {
+  background-color: #232323;
+  background-image: url('../img/micro_carbon.png');
+  border-radius: 4px;
+  height: 86.83333333333333vh; /* 521px */
+  margin: 0 auto;
+  width: 98vw; /* 784px */
+}
+.settings .container div div {
+  background-color: #4a4a4a;
+  background-image: url('../img/wild_oliva.jpg');
+  margin: 0 auto .6666666666666667vh; /* 4px */
+  padding: .6666666666666667vh 1vw; /* 4px 8px */
+  width: 92.375vw; /* 739px */
+}
+.settings .container div div label {
+  display: inline-block;
+  font-size: .9em;
+  margin: 0 4vw; /* 32px */
+  width: 40vw; /* 320px */
+}
+.settings .container div div span {
+  color: #ffffff;
+  font-size: .9em;
+  margin-bottom: .6666666666666667vh; /* 4px */
+}
+.settings .container > div {
+  height: 81.5vh; /* 489px */
+  margin-right: 1vw; /* 8px */
+  overflow-y: scroll;
+  width: 96.875vw; /* 775px */
+}
+.settings .container > div::-webkit-scrollbar {
+  background-color: #333333;
+  border-radius: 2px;
+  width: 1.5vw; /* 12px */
+}
+.settings .container > div::-webkit-scrollbar-thumb {
+  background-color: #3eb8e5;
+  border-radius: 2px;
+}
+  /*---- Bottom Bar ----*/
+.bottom-bar {
+  background-color: #232323;
+  background-image: url('../img/micro_carbon.png');
+  border-radius: 0;
+  height: 5.166666666666667vh; /* 31px */
+  margin-top: .6666666666666667vh; /* 4px */
+  text-align: center;
+  width: 100vw;
+}
+.bottom-bar i {
+  height: 3.333333333333333vh; /* 20px */
+  margin: .6666666666666667vh .125vw; /* 4px 1px */
+  width: 20vw; /* 150px */
+}
+
+
+/*---- Themes ----*/
+  /*---- Natural Materials Theme ----*/
+.theme-natural-materials {
+  color: #dddddd;
+}
+.theme-natural-materials h1,
+.theme-natural-materials h2,
+.theme-natural-materials h3,
+.theme-natural-materials .btn {
+  color: #ffffff;
+}
+.theme-natural-materials #wrapper {
+  background-color: #866f51;
+  background: url(../img/loading.gif) 50% 55% no-repeat, url('../img/retina_wood_darker.jpg');
+}
+.theme-natural-materials .top-bar,
+.theme-natural-materials .bottom-bar {
+  background-color: #232323;
+  background-image: url('../img/dark_leather_lighter.jpg');
+}
+.theme-natural-materials .main .mode-marker div {
+  color: #ffffff;
+}
+.theme-natural-materials .main .counter {
+  background-color: #232323;
+  background-image: url('../img/dark_leather_lighter.jpg');
+}
+.theme-natural-materials .main .counter > div > div {
+  background-color: #866f51;
+  background-image: url('../img/retina_wood_darker.jpg');
+}
+.theme-natural-materials .main .counter .mode-switcher label {
+  color: #ffffff;
+}
+.theme-natural-materials .main .metering > div:first-child > div:last-child {
+  background-color: #232323;
+  background-image: url('../img/dark_leather_lighter.jpg');
+}
+.theme-natural-materials .main .metering > div:first-child > div:last-child .camera-switcher {
+  background-color: #866f51;
+}
+.theme-natural-materials .main .metering .metering-writing {
+  background-color: #232323;
+  background-image: url('../img/dark_leather_lighter.jpg');
+}
+.theme-natural-materials .main .metering .metering-writing:after {
+  background-color: #232323;
+  background-image: url('../img/dark_leather_lighter.jpg');
+}
+.theme-natural-materials .main .metering .metering-writing .table {
+  color: #dddddd;
+}
+.theme-natural-materials .main .metering .metering-writing .table input[type="text"] {
+  background-color: #333333;
+  color: #dddddd;
+}
+.theme-natural-materials .main .metering .metering-writing .table div div {
+  background-color: #333333;
+  border: 1px solid #866f51;
+}
+.theme-natural-materials .main .water-meter-specs::-webkit-scrollbar {
+  background-color: #333333;
+}
+.theme-natural-materials .main .water-meter-specs .protocol {
+  background-color: #232323;
+  background-image: url('../img/dark_leather_lighter.jpg');
+}
+.theme-natural-materials .main .water-meter-specs .protocol input[type="text"] {
+  background-color: #333333;
+  color: #dddddd;
+}
+.theme-natural-materials .main .water-meter-specs .protocol input[type="text"]:focus {
+  background-color: #232323;
+}
+.theme-natural-materials .doclist .container {
+  background-color: #232323;
+  background-image: url('../img/dark_leather_lighter.jpg');
+}
+.theme-natural-materials .doclist .container div div {
+  background-color: #866f51;
+  background-image: url('../img/retina_wood_darker.jpg');
+}
+.theme-natural-materials .doclist .container > div::-webkit-scrollbar {
+  background-color: #333333;
+}
+.theme-natural-materials .settings input[type="text"],
+.theme-natural-materials .settings select {
+  background-color: #333333;
+  color: #dddddd;
+}
+.theme-natural-materials .settings input[type="text"]:focus {
+  background-color: #232323;
+}
+.theme-natural-materials .settings .container {
+  background-color: #232323;
+  background-image: url('../img/dark_leather_lighter.jpg');
+}
+.theme-natural-materials .settings .container div div {
+  background-color: #866f51;
+  background-image: url('../img/retina_wood_darker.jpg');
+}
+.theme-natural-materials .settings .container div div span {
+  color: #ffffff;
+}
+.theme-natural-materials .settings .container > div::-webkit-scrollbar {
+  background-color: #333333;
+}
+  /*---- White Denim Theme ----*/
+.theme-white-denim {
+  color: #111111;
+}
+.theme-white-denim input[type="radio"] + label span,
+.theme-white-denim .camera-switcher div img {
+  opacity: .75;
+}
+.theme-white-denim h1,
+.theme-white-denim h2,
+.theme-white-denim h3,
+.theme-white-denim .btn {
+  color: #333333;
+}
+.theme-white-denim #wrapper {
+  background-color: #949494;
+  background: url(../img/loading.gif) 50% 55% no-repeat, url('../img/mocha_grunge.jpg');
+}
+.theme-white-denim .top-bar,
+.theme-white-denim .bottom-bar {
+  background-color: #dddddd;
+  background-image: url('../img/gray_jean_darker.png');
+}
+.theme-white-denim .main .mode-marker div {
+  color: #333333;
+}
+.theme-white-denim .main .counter {
+  background-color: #dddddd;
+  background-image: url('../img/gray_jean_darker.png');
+}
+.theme-white-denim .main .counter > div > div {
+  background-color: #949494;
+  background-image: url('../img/mocha_grunge.jpg');
+}
+.theme-white-denim .main .counter .mode-switcher label {
+  color: #333333;
+}
+.theme-white-denim .main .metering > div:first-child > div:last-child {
+  background-color: #dddddd;
+  background-image: url('../img/gray_jean_darker.png');
+}
+.theme-white-denim .main .metering > div:first-child > div:last-child .camera-switcher {
+  background-color: #949494;
+}
+.theme-white-denim .main .metering .metering-writing {
+  background-color: #dddddd;
+  background-image: url('../img/gray_jean_darker.png');
+}
+.theme-white-denim .main .metering .metering-writing:after {
+  background-color: #dddddd;
+  background-image: url('../img/gray_jean_darker.png');
+}
+.theme-white-denim .main .metering .metering-writing .table {
+  color: #111111;
+}
+.theme-white-denim .main .metering .metering-writing .table input[type="text"] {
+  background-color: #ededed;
+  color: #111111;
+}
+.theme-white-denim .main .metering .metering-writing .table div div {
+  background-color: #ededed;
+  border: 1px solid #949494;
+}
+.theme-white-denim .main .water-meter-specs::-webkit-scrollbar {
+  background-color: #ededed;
+}
+.theme-white-denim .main .water-meter-specs .protocol {
+  background-color: #dddddd;
+  background-image: url('../img/gray_jean_darker.png');
+}
+.theme-white-denim .main .water-meter-specs .protocol input[type="text"] {
+  background-color: #ededed;
+  color: #111111;
+}
+.theme-white-denim .main .water-meter-specs .protocol input[type="text"]:focus {
+  background-color: #dddddd;
+}
+.theme-white-denim .doclist .container {
+  background-color: #dddddd;
+  background-image: url('../img/gray_jean_darker.png');
+}
+.theme-white-denim .doclist .container div div {
+  background-color: #949494;
+  background-image: url('../img/mocha_grunge.jpg');
+}
+.theme-white-denim .doclist .container > div::-webkit-scrollbar {
+  background-color: #ededed;
+}
+.theme-white-denim .settings input[type="text"],
+.theme-white-denim .settings select {
+  background-color: #ededed;
+  color: #111111;
+}
+.theme-white-denim .settings input[type="text"]:focus {
+  background-color: #dddddd;
+}
+.theme-white-denim .settings .container {
+  background-color: #dddddd;
+  background-image: url('../img/gray_jean_darker.png');
+}
+.theme-white-denim .settings .container div div {
+  background-color: #949494;
+  background-image: url('../img/mocha_grunge.jpg');
+}
+.theme-white-denim .settings .container div div span {
+  color: #333333;
+}
+.theme-white-denim .settings .container > div::-webkit-scrollbar {
+  background-color: #ededed;
+}
+
+
+/*---- For the screens with 5x4 ratio or less ----*/
+@media (max-aspect-ratio: 11/9) {
+  body {
+    background: url(../img/tap-water-logo.png) center / 128px no-repeat, url(../img/rotate-device.gif) center no-repeat, #212121;
+  }
+  #wrapper {
+    visibility: hidden;
+  }
+}
+.main .metering .metering-writing .table div:nth-child(2) div:first-child span:first-child {
+  letter-spacing: -.029em;
+}

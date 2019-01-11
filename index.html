@@ -6,8 +6,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="icon" href="img/wma-icon-transparent.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="css/reset.css" />
-	<link rel="stylesheet" href="css/styles.css" media="screen" />
 	<link rel="stylesheet" href="css/font-awesome.css" />
+	<link rel="stylesheet" href="css/styles.css" media="screen" />
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 	<script src="js/main.js"></script>
 </head>
@@ -16,22 +16,22 @@
 
 
 
-		<!-- Top bar -->
+		<!-- Top Bar -->
 
-		<div class="navigator">
+		<div class="top-bar">
 				<div>
 					<img id="logo" src="img/wma-logo-64.png" height="64" width="180" alt="Логотип" />
 				</div>
 				<a href="index.html">
-					<i class="fa fa-home btn"></i><!-- id="btnHome" -->
+					<i class="fa fa-home btn" title="Головний екран"></i><!-- id="btnHome" -->
 				</a>
 				<a href="doclist.html">
-					<i class="fa fa-archive btn"></i><!-- id="btnArchive" -->
+					<i class="fa fa-list-ul btn" title="Архів протоколу"></i><!-- id="btnArchive" -->
 				</a>
 				<a href="settings.html">
-					<i class="fa fa-cogs btn"></i><!-- id="btnSettings" -->
+					<i class="fa fa-cogs btn" title="Налаштування"></i><!-- id="btnSettings" -->
 				</a>
-		</div><!-- end .top -->
+		</div><!-- end .top-bar -->
 
 
 
@@ -40,9 +40,9 @@
 		<div class="main">
 
 
-			<!-- Indicator -->
+			<!-- Mode Marker -->
 
-			<div class="indicator">
+			<div class="mode-marker">
 				<div id="qminCurrent">
 					<span>
 						Q<sub>min</sub>
@@ -58,12 +58,12 @@
 						Q<sub>nom</sub>
 					</span>
 				</div>
-			</div><!-- end .indicator -->
+			</div><!-- end .mode-marker -->
 
 
 			<!-- Meter -->
 
-			<div class="meter">
+			<div class="counter">
 				<div>
 					<h1>Лічильник</h1>
 					<div>
@@ -88,24 +88,23 @@
 						<span>0,00</span><!-- id="consumptionLiter" -->
 					</div>
 				</div>
-				<div class="switcher">
+				<div class="mode-switcher">
 					<input type="radio" id="qminMode" name="qMode" value="qmin" checked />
 					<label for="qminMode">Q<sub>min</sub></label>
 					<input type="radio" id="qtMode" name="qMode" value="qt" />
 					<label for="qtMode">Q<sub>t</sub></label>
 					<input type="radio" id="qnomMode" name="qMode" value="qnom" />
 					<label for="qnomMode">Q<sub>nom</sub></label>
-				</div><!-- end .switcher -->
-			</div><!-- end .meter -->
+				</div><!-- end .mode-switcher -->
+			</div><!-- end .counter -->
 
 
 			<!-- Metering Section -->
 
 			<div class="metering">
-				<div>
-					<div></div>
+				<div class="metering-reading">
 					<div>
-						<div class="thumbnails">
+						<div class="camera-switcher">
 							<div>
 								<input type="radio" id="viewMode1Camera" name="viewMode1" value="camera" checked />
 								<label for="viewMode1Camera">
@@ -120,7 +119,7 @@
 									<span></span>
 									<img src="img/cross-icon-128x96.png" height="96" width="128" alt="Фото 1" />
 								</label>
-								<span>Фото 1</span>
+								<span>Початковий<br />знімок</span>
 							</div>
 							<div>
 								<input type="radio" id="viewMode1Photo2" name="viewMode1" value="photo2" />
@@ -128,9 +127,9 @@
 									<span></span>
 									<img src="img/cross-icon-128x96.png" height="96" width="128" alt="Фото 2" />
 								</label>
-								<span>Фото 2</span>
+								<span>Кінцевий<br />знімок</span>
 							</div>
-						</div><!-- end .thumbnails -->
+						</div><!-- end .camera-switcher -->
 						<div class="camera">
 							<div>
 								<video src="img/test_video_4x3.webm" height="360" width="480"></video><!-- id="video1" -->
@@ -144,7 +143,7 @@
 						</div><!-- end .camera -->
 					</div>
 				</div>
-				<div class="mode">
+				<div class="metering-writing">
 					<h3>Режим виміру</h3>
 					<div class="table">
 						<div>
@@ -214,13 +213,13 @@
 							<i class="btn">Старт</i><!-- id="start1" -->
 						</div>
 					</div><!-- end .table -->
-				</div><!-- end .mode -->
+				</div><!-- end .metering-writing -->
 			</div><!-- end .metering -->
 
 
 			<!-- Data Entry Block -->
 
-			<div class="data-entry">
+			<div class="water-meter-specs">
 
 
 				<!-- Protocol Block -->
@@ -240,16 +239,16 @@
 								<option value="Option 4"></option>
 								<option value="Option 5"></option>
 							</datalist>
-							<i class="fa fa-plus-square btn"></i>
-							<i class="fa fa-minus-square btn"></i>
+							<i class="fa fa-plus-square btn" title="Додати"></i>
+							<i class="fa fa-minus-square btn" title="Видалити"></i>
 							<label for="formMeterType">
 								Тип водолічильника
 							</label>
 							<input type="text" id="formMeterType" list="listMeterType" />
 							<datalist id="listMeterType">
 							</datalist>
-							<i class="fa fa-plus-square btn"></i>
-							<i class="fa fa-minus-square btn"></i>
+							<i class="fa fa-plus-square btn" title="Додати"></i>
+							<i class="fa fa-minus-square btn" title="Видалити"></i>
 						</div>
 						<div>
 							<label for="formMeterNumber">
@@ -262,8 +261,8 @@
 							<input type="text" id="formOpeningDiameter" list="listOpeningDiameter" />
 							<datalist id="listOpeningDiameter">
 							</datalist>
-							<i class="fa fa-plus-square btn"></i>
-							<i class="fa fa-minus-square btn"></i>
+							<i class="fa fa-plus-square btn" title="Додати"></i>
+							<i class="fa fa-minus-square btn" title="Видалити"></i>
 						</div>
 						<div>
 							<label for="formYear">
@@ -272,16 +271,16 @@
 							<input type="text" id="formYear" list="listYear" />
 							<datalist id="listYear">
 							</datalist>
-							<i class="fa fa-plus-square btn"></i>
-							<i class="fa fa-minus-square btn"></i>
+							<i class="fa fa-plus-square btn" title="Додати"></i>
+							<i class="fa fa-minus-square btn" title="Видалити"></i>
 							<label for="formManufacturer">
 								Виробник водолічильника
 							</label>
 							<input type="text" id="formManufacturer" list="listManufacturer" />
 							<datalist id="listManufacturer">
 							</datalist>
-							<i class="fa fa-plus-square btn"></i>
-							<i class="fa fa-minus-square btn"></i>
+							<i class="fa fa-plus-square btn" title="Додати"></i>
+							<i class="fa fa-minus-square btn" title="Видалити"></i>
 						</div>
 					</div>
 				</div><!-- end .protocol -->
@@ -349,15 +348,15 @@
 					</div>
 				</div><!--  end .client-data  -->
 
-			</div><!--  end .data-entry  -->
+			</div><!--  end .water-meter-specs  -->
 
 
-			<!-- Bottom Line -->
+			<!-- Bottom Bar -->
 
-			<div class="bottomline">
+			<div class="bottom-bar">
 				<i class="btn">Зберегти</i><!-- id="btnSave" -->
 				<i class="btn">Скидання значень</i><!-- id="btnReset" -->
-			</div><!-- end .bottomline -->
+			</div><!-- end .bottom-bar -->
 
 
 		</div><!-- end .main -->
